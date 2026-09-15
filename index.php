@@ -70,6 +70,13 @@ $estado = $_GET['estado'] ?? '';
                     La cantidad debe ser un número.
                 </div>
             <?php endif; ?>
+            
+
+            <?php  if (($_GET['estado'] ?? '') === 'cantidad_invalida'): ?>
+            <div class="alerta-error">
+            La cantidad debe ser un número entero mayor o igual que cero.
+            </div>
+            /<?php endif;  ?>
 
             <form action="guardar.php" method="POST">
                 <div class="campo">
@@ -97,6 +104,7 @@ $estado = $_GET['estado'] ?? '';
                         id="cantidad"
                         name="cantidad"
                         placeholder="Ejemplo: 10"
+                        min ="0"
                         required
                     >
                 </div>

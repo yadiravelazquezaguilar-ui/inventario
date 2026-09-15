@@ -7,6 +7,20 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+
+$cantidad = filter_input(
+    INPUT_POST,
+    'cantidad',
+    FILTER_VALIDATE_INT
+);
+
+if ($cantidad === false || $cantidad < 0) {
+    header('Location: index.php?estado=cantidad_invalida');
+    exit;
+}
+
+
+
 $nombre = trim($_POST['nombre'] ?? '');
 $cantidad = $_POST['cantidad'] ?? '';
 
@@ -14,12 +28,13 @@ if ($nombre === '' || $cantidad === '') {
     header('Location: index.php?estado=incompleto');
     exit;
 }
-
+/*
 if (!is_numeric($cantidad)) {
     header('Location: index.php?estado=cantidad_invalida');
     exit;
 }
 
+*/
 $sentencia = $conexion->prepare(
     'INSERT INTO productos (nombre, cantidad)
      VALUES (:nombre, :cantidad)'
