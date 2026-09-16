@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  revisar-sintaxis:
+  revisar-proyecto:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,8 +18,15 @@ jobs:
         with:
           php-version: '8.2'
 
-      - name: Revisar sintaxis de index.php
-        run: php -l index.php
+      - name: Verificar archivos requeridos
+        run: |
+          test -f index.php
+          test -f guardar.php
+          test -f config/conexion.php
 
-      - name: Revisar sintaxis de guardar.php
-        run: php -l guardar.php
+      - name: Revisar sintaxis de todos los archivos PHP
+        run: |
+          find . -name "*.php" -print0 | xargs -0 -n1 php -l
+
+      - name: Ejecutar pruebas funcionales
+        run: php tests/validacion_nombre.php
