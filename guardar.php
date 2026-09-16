@@ -21,7 +21,7 @@ if ($cantidad === false || $cantidad < 0) {
 
 
 
-$nombre = trim($_POST['nombre'] ?? '');
+$nombre = trim($_POST['nombre'] ?? '') //Error
 $cantidad = $_POST['cantidad'] ?? '';
 
 if ($nombre === '' || $cantidad === '') {
