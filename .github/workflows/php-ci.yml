@@ -1,16 +1,20 @@
-name: PHP CI
+name: Pruebas automatizadas - Inventario
 
 on:
+  push:
   pull_request:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
-  revisar-sintaxis:
+  pruebas:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Descargar codigo
+      - name: Descargar código
         uses: actions/checkout@v4
 
       - name: Configurar PHP
@@ -18,8 +22,10 @@ jobs:
         with:
           php-version: '8.2'
 
-      - name: Revisar sintaxis de index.php
-        run: php -l index.php
+      - name: Verificar sintaxis
+        run: |
+          php -l src/validaciones.php
+          php -l tests/test_validaciones.php
 
-      - name: Revisar sintaxis de guardar.php
-        run: php -l guardar.php
+      - name: Ejecutar pruebas
+        run: php tests/test_validaciones.php
